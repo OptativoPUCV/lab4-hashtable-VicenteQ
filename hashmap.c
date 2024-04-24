@@ -95,7 +95,7 @@ void eraseMap(HashMap *map, char *key) {
   int posicion = hash(key, map->capacity); 
   int posOriginal = posicion;
   while (1) {
-    Pair *current_pair = map->buckets[index];
+    Pair *current_pair = map->buckets[posicion];
     if (current_pair == NULL) {
       return;
     } else if (is_equal(current_pair->key, key)) {
