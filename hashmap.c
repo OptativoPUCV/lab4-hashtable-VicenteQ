@@ -40,7 +40,27 @@ int is_equal(void* key1, void* key2){
 
 
 void insertMap(HashMap * map, char * key, void * value) {
-  
+  if(map == NULL || key == NULL) return;
+  int posicion = hash(key,map->capacity);
+  int indiceOriginal = posicion;
+  while(1){
+    Pair *current_pair = map->buckets[posicion];
+    if (current_pair == NULL || current_pair->key == NULL){
+      Pair *new_pair = createPair(key, value);
+      map->buckets[posicion] = new_pair;
+      map->size++;
+      map->current = posicion;
+      return;
+    }else if (is_equal(current_pair->key, key)) {
+        current_pair->value = value;
+        return;
+    }
+      posicion = (posicion + 1) % map->capacity;
+    if (posicion == indiceOriginal) {
+        printf("Error: No hay casillas disponibles.\n");
+        return;
+    }
+  }
 
 }
 
